@@ -3,7 +3,7 @@ name: Override Docker Image for stable branch
 on:
   push:
     branches:
-      - stable
+      - master
 
 jobs:
   build:
