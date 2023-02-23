@@ -21,4 +21,4 @@ jobs:
         uses: aws-actions/aws-codebuild-run-build@v1
         with:
           project-name: aws-code-build-image-override
-          image-override: ${{ secrets.ECR_CUSTOM_IMAGE_URI_MASTER }}
+          image-override: ${{ secrets.ECR_CUSTOM_IMAGE_URI_STABLE }}
