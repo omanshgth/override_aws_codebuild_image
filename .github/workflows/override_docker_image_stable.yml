@@ -1,4 +1,4 @@
-name: Override Docker Image for stable branch
+name: Override Build Image for Master & Stable branches
 
 on:
   push:
