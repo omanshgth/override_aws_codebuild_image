@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Prebuild Phase"
+  build:
+    commands:
+      - aws s3 ls s3://$BUCKET_NAME/$DSS_S3_BUILDS_PREFIX
+  post_build:
+    commands:
+      - echo "Post Build Phase"
