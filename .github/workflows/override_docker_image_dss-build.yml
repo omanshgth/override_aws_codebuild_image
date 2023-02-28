@@ -30,10 +30,22 @@ jobs:
         run:  |
           aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text 
           #Get the build number associated with the build-project 
-          latest_build_number = $(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) ----query 'builds[*].[buildNumber]' --output text)
+          latest_build_number = $(aws codebuild batch-get-builds --ids $(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
           #Fetch objects and create presign urls
           for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
               url=$(aws s3 presign "s3://dss-artifacts/$key" --expires-in 2)
               echo "$key: $url"
           done
+
+      - name: Fetch the latest build number & Create S3 Urls
+        if: success()
+        run:  |
+          aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text 
+          #Get the build number associated with the build-project 
+          latest_build_number = $(aws codebuild batch-get-builds --ids $(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
+          #Fetch objects and create presign urls
+          for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
+              echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/{key}"
+          done
+
 
