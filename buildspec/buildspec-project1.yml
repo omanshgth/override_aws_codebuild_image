@@ -6,7 +6,17 @@ phases:
       - echo "Prebuild Phase"
   build:
     commands:
+      - touch sample_file.txt
+      - touch sample_file2.txt
+      - echo "hello world">sample_file.txt
+       - echo "hello world">sample_file2.txt
       - aws s3 ls s3://$BUCKET_NAME/$DSS_S3_BUILDS_PREFIX
   post_build:
     commands:
       - echo "Post Build Phase"
+artifacts:
+  files:
+    - sample_file.txt
+    - sample_file2.txt
+  discard-paths: yes
+  name: builds/aws-code-build-image-override/$CODEBUILD_BUILD_NUMBER
