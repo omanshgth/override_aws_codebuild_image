@@ -8,8 +8,8 @@ phases:
     commands:
       - touch sample_file.txt
       - touch sample_file2.txt
-      - echo "hello world">sample_file.txt
-       - echo "hello world">sample_file2.txt
+      - echo "hello world sample file">sample_file.txt
+      - echo "hello world sample file2">sample_file2.txt
       - aws s3 ls s3://$BUCKET_NAME/$DSS_S3_BUILDS_PREFIX
   post_build:
     commands:
