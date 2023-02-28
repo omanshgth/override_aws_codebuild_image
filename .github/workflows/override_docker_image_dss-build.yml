@@ -24,3 +24,8 @@ jobs:
           compute-type-override: BUILD_GENERAL1_MEDIUM
           buildspec-override: ./buildspec/buildspec-project1.yml
           image-override: "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.REGION_NAME }}.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ github.ref_name }}"
+
+      - name: Fetch the latest build number
+        run:  |
+          aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text 
+          
