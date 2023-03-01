@@ -23,7 +23,7 @@ jobs:
           project-name: aws-code-build-image-override
           # compute-type-override: BUILD_GENERAL1_MEDIUM
           buildspec-override: ./buildspec/buildspec-project1.yml
-          image-override: "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.REGION_NAME }}.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ github.ref_name }}"
+          image-override: "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-1.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ github.ref_name }}"
 
       - name: Create S3 Urls for generated artifacts
         if: success()
