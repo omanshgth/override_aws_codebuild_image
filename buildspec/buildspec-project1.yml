@@ -14,7 +14,7 @@ phases:
       - echo "Post Build Phase"
 artifacts:
   files:
-    - sample_file.txt
+    - sample_file1.txt
     - sample_file2.txt
   discard-paths: yes
   name: builds/aws-code-build-image-override/$CODEBUILD_BUILD_NUMBER
