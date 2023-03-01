@@ -16,7 +16,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # aws-region: us-west-1
+          aws-region: us-west-1
       - name: Run CodeBuild
         uses: aws-actions/aws-codebuild-run-build@v1
         with:
@@ -33,7 +33,7 @@ jobs:
           latest_build_number=$(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
           #Fetch objects and create presign urls
           for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
-              echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/$key"
+              echo "https://dss-artifacts.s3.${{ env.AWS_REGION }}.amazonaws.com/$key" | secrets
           done
       - name: Download S3 artifact
         run: |
