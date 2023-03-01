@@ -6,9 +6,7 @@ phases:
       - echo "Prebuild Phase"
   build:
     commands:
-      - touch sample_file1.txt
-      - touch sample_file2.txt
-      - echo "hello world sample file">sample_file.txt
+      - echo "hello world sample file">sample_file1.txt
       - echo "hello world sample file2">sample_file2.txt
       - aws s3 ls s3://$BUCKET_NAME/$DSS_S3_BUILDS_PREFIX
   post_build:
