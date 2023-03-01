@@ -35,5 +35,15 @@ jobs:
           for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
               echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/$key"
           done
+      - name: Download S3 artifact
+        run: |
+          latest_build_number=$(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
+          #Download the s3 artifacts from s3 as per the latest build
+          aws s3 sync s3://dss-artifacts/builds/aws-code-build-image-override/$latest_build_number ./s3_artifacts/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: S3 Artifacts
+          path: ./s3_artifacts/
 
 
