@@ -33,7 +33,7 @@ jobs:
           latest_build_number=$(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
           #Fetch objects and create presign urls
           for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
-              echo "https://dss-artifacts.s3.${{ env.AWS_REGION }}.amazonaws.com/$key" | secrets
+              echo "https://dss-artifacts.s3.${{ env.REGION_NAME }}.amazonaws.com/$key" | secrets
           done
       - name: Download S3 artifact
         run: |
