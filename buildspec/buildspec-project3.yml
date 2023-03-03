@@ -17,4 +17,5 @@ phases:
         for key in $(aws s3api list-objects --bucket $BUCKET_NAME --prefix builds/aws-code-build-image-override/$CODEBUILD_BUILD_NUMBER/ --query 'Contents[].{Key: Key}' --output text); do
           echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/$key\n" >> artifacts_file.txt
         done
-      - echo artifacts_file.txt
+      - echo "Generated Artifacts are mentioned below"
+      - cat artifacts_file.txt
