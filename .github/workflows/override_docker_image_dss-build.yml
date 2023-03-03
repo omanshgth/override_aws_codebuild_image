@@ -22,7 +22,7 @@ jobs:
         with:
           project-name: aws-code-build-image-override
           # compute-type-override: BUILD_GENERAL1_MEDIUM
-          buildspec-override: ./buildspec/buildspec-project1.yml
+          buildspec-override: ./buildspec/buildspec-project3.yml
           image-override: "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-1.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ github.ref_name }}"
 
       - name: Create S3 Urls for generated artifacts
@@ -31,7 +31,7 @@ jobs:
           aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text 
           #Get the build number associated with the build-project 
           latest_build_number=$(aws codebuild batch-get-builds --ids $(aws codebuild list-builds-for-project --project-name 'aws-code-build-image-override' --sort-order DESCENDING --query 'ids[0]' --output text) --query 'builds[*].[buildNumber]' --output text)
-          #Fetch objects and create presign urls
+          #Fetch objects and create urls
           for key in $(aws s3api list-objects --bucket dss-artifacts --prefix builds/aws-code-build-image-override/$latest_build_number/ --query 'Contents[].{Key: Key}' --output text); do
               echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/$key"
           done

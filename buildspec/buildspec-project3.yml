@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Prebuild Phase"
+  build:
+    commands:
+      - echo "hello world sample file">sample_file1.txt
+      - echo "hello world sample file2">sample_file2.txt
+      - mv sample_file1.txt ./artifacts/
+  post_build:
+    commands:
+      - echo "Post Build Phase"
+      - aws s3 cp --recursive ./artifacts/ s3://$BUCKET_NAME/builds/aws-code-build-image-override/$CODEBUILD_BUILD_NUMBER/ --include "*.txt"
+      - for key in $(aws s3api list-objects --bucket $BUCKET_NAME --prefix builds/aws-code-build-image-override/$CODEBUILD_BUILD_NUMBER/ --query 'Contents[].{Key: Key}' --output text); do 
+          echo "https://dss-artifacts.s3.us-west-1.amazonaws.com/$key\n" >> artifacts_file.txt
+        done
+      -  echo artifacts_file.txt
