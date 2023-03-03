@@ -8,7 +8,8 @@ phases:
     commands:
       - echo "hello world sample file">sample_file1.txt
       - echo "hello world sample file2">sample_file2.txt
-      - mv sample_file1.txt ./artifacts/
+      - mkdir artifacts
+      - mv sample_file1.txt sample_file2.txt ./artifacts/
   post_build:
     commands:
       - echo "Post Build Phase"
