@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # We need this because GitHub needs to clone the branch to pipeline
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
       - name: AWS Configue
         uses: ./.github/template/aws_configure_template.yml
       - name: Run pycodestyle on CodeBuild
