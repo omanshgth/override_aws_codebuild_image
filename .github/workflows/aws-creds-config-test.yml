@@ -18,9 +18,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
   
-  run-aws-s3-ls:
+  pycodestyle:
     needs: configure-aws-creds
     runs-on: ubuntu-latest
     steps:
-      - name: Run CLI Commands
-        run:  aws s3 ls s3://dss-artifacts/builds/DSS/
+      - name: Run pycodestyle on CodeBuild
+        uses: aws-actions/aws-codebuild-run-build@v1
+        with:
+          project-name: aws-code-build-image-override
