@@ -9,10 +9,10 @@ jobs:
   configure-aws-creds:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: ${{ github.event.workflow_run.head_branch }}
       - name: AWS Configure
         uses: "./.github/template/aws-configure"
       - name: Run pycodestyle on CodeBuild
