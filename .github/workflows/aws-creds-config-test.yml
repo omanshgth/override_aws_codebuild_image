@@ -1,0 +1,25 @@
+name: Override Build Image for Master & Stable branches
+
+on:
+  push:
+    branches:
+      - aws-creds-test
+
+jobs:
+  configure-aws-creds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+  
+  run-aws-s3-ls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run CLI Commands
+        run:  aws s3 ls s3://dss-artifacts/builds/DSS/
