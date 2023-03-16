@@ -19,6 +19,7 @@ jobs:
           aws-region: us-west-1
   
   run-aws-s3-ls:
+    needs: configure-aws-creds
     runs-on: ubuntu-latest
     steps:
       - name: Run CLI Commands
