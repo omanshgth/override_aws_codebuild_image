@@ -10,13 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # We need this because GitHub needs to clone the branch to pipeline
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
       - name: AWS Configure
-        uses: "./.github/template/aws-configure/aws_configure_template.yml"
+        uses: ./aws-configure.yml
       - name: Run pycodestyle on CodeBuild
         uses: aws-actions/aws-codebuild-run-build@v1
         with:
           project-name: aws-code-build-image-override
+  
+templates:
+  aws-configure:
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
