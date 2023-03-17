@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: AWS Configure
-        uses: octo-org/reusable_workflow/.github/templates/aws-configure
+        uses: omanshgth/reusable_workflow/.github/templates/aws-configure
         with:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
