@@ -23,7 +23,6 @@ jobs:
   #       uses: aws-actions/aws-codebuild-run-build@v1
   #       with:
   #         project-name: aws-code-build-image-override
-
   configure-aws-creds:
     runs-on: ubuntu-latest
     steps:
